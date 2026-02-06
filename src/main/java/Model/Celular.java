@@ -6,22 +6,22 @@ public class Celular {
     private double precio;
     private String modelo;
     private String sistema_operativo;
-    private enum gama{Baja, Media, Alta};
+    private Gama gama;
     private Marca id_marca;
 
-    public Celular(int id, int stock, double precio, String modelo, String sistema_operativo, Marca id_marca) {
+    public Celular(int id, int stock, double precio, String modelo, String sistema_operativo, Gama gama, Marca id_marca) {
         this.id = id;
         this.stock = stock;
         this.precio = precio;
         this.modelo = modelo;
         this.sistema_operativo = sistema_operativo;
+        this.gama = gama;
         this.id_marca = id_marca;
     }
 
     public Celular() {
-        
     }
-    
+
     public int getId() {
         return id;
     }
@@ -36,14 +36,6 @@ public class Celular {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public Marca getId_marca() {
-        return id_marca;
-    }
-
-    public void setId_marca(Marca id_marca) {
-        this.id_marca = id_marca;
     }
 
     public double getPrecio() {
@@ -70,6 +62,23 @@ public class Celular {
         this.sistema_operativo = sistema_operativo;
     }
 
+    public Gama getGama() {
+        return gama;
+    }
+
+    public void setGama(Gama gama) {
+        this.gama = gama;
+    }
+
+    public Marca getId_marca() {
+        return id_marca;
+    }
+
+    public void setId_marca(Marca id_marca) {
+        this.id_marca = id_marca;
+    }
+
+
     @Override
     public String toString() {
         return """
@@ -78,6 +87,6 @@ public class Celular {
                 Modelo:              %s
                 Sistema Operativo:   %s
                 Marca:               %s
-               """.formatted(id, stock, modelo, sistema_operativo, id_marca);
+               """.formatted(id, stock, modelo, sistema_operativo, gama, id_marca);
     }
 }

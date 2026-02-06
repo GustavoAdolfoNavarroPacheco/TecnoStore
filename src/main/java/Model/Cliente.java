@@ -5,14 +5,14 @@ public class Cliente {
     private String nombre;
     private String identificacion;
     private String correo;
-    private String celular;
+    private String telefono;
 
-    public Cliente(int id, String nombre, String identificacion, String correo, String celular) {
+    public Cliente(int id, String nombre, String identificacion, String correo, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.identificacion = identificacion;
         this.correo = correo;
-        this.celular = celular;
+        this.telefono = telefono;
     }
 
     public Cliente() {
@@ -50,12 +50,12 @@ public class Cliente {
         this.correo = correo;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
     
     @Override
@@ -66,6 +66,6 @@ public class Cliente {
                 Identificacion:       %s
                 Correo:               %s
                 Celular:              %s
-               """.formatted(id, nombre, identificacion, correo, celular);
+               """.formatted(id, nombre, identificacion, correo, telefono);
     }
 }

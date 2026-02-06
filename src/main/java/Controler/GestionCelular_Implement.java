@@ -15,11 +15,11 @@ public class GestionCelular_Implement implements GestionCelular {
     Conexion c = new Conexion();
 
     @Override
-    public void guardar(Celular ce) {
+    public void Guardar(Celular ce) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("insert into celular(modelo, OS, gama, stock, precio, id_marca) values (?,?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("insert into celular(modelo, sistema_operativo, gama, stock, precio, id_marca) values (?,?,?,?,?,?)");
             ps.setString(1, ce.getModelo());
-            ps.setString(2, ce.getOS());
+            ps.setString(2, ce.getSistema_operativo());
             ps.setObject(3, ce.getGama());
             ps.setString(4, String.valueOf(ce.getStock()));
             ps.setString(5, String.valueOf(ce.getPrecio()));
@@ -32,7 +32,7 @@ public class GestionCelular_Implement implements GestionCelular {
     }
 
     @Override
-    public void actualizar(Celular ce, int id) {
+    public void Actualizar(Celular ce, int id) {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("update celular set modelo=?, OS=?, gama=?, stock=?, precio=?, id_marca=? where id=?");
             ps.setString(1, ce.getModelo());
@@ -50,7 +50,7 @@ public class GestionCelular_Implement implements GestionCelular {
     }
 
     @Override
-    public void eliminar(int id) {
+    public void Eliminar(int id) {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("delete from celular where id=?");
             ps.setInt(1, id);
@@ -67,7 +67,7 @@ public class GestionCelular_Implement implements GestionCelular {
     }
 
     @Override
-    public ArrayList<Celular> listar() {
+    public ArrayList<Celular> Listar() {
         ArrayList<Celular> celulares = new ArrayList<>();
         try (Connection con = c.Conexion()) {
             Statement st = con.createStatement();
@@ -90,7 +90,7 @@ public class GestionCelular_Implement implements GestionCelular {
     }
 
     @Override
-    public Celular buscar(int id) {
+    public Celular Buscar(int id) {
         Celular ce = new Celular();
         try (Connection con = c.Conexion()) {
             Statement st = con.createStatement();
