@@ -1,11 +1,11 @@
 package com.mycompany.tecnostore;
 
-import Controler.Conexion;
+import View.Main;
 
 public class TecnoStore {
 
     public static void main(String[] args) {
-        Conexion conexion = new Conexion();
-        conexion.Conexion();
+        Main Mp = new Main();
+        Mp.MenuPrincipal();
     }
 }

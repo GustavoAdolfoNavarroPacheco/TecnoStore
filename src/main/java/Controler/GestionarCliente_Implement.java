@@ -3,7 +3,9 @@ package Controler;
 import Model.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -13,7 +15,7 @@ public class GestionarCliente_Implement implements GestionCliente {
     @Override
     public void Registrar(Cliente cl) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Cliente(nombre, identificacion, correo, telefono) values (?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO cliente(nombre, identificacion, correo, celular) VALUES (?,?,?,?)");
             ps.setString(1, cl.getNombre());
             ps.setString(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());
@@ -29,11 +31,11 @@ public class GestionarCliente_Implement implements GestionCliente {
     @Override
     public void Actualizar(Cliente cl, int id) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE Cliente SET nombre = ?, identificacion = ?, correo = ?, telefono = ? WHERE id = ?");
-            ps.setString(1, c.getNombre());
-            ps.setString(2, c.getIdentificacion());
-            ps.setString(3, c.getCorreo());
-            ps.setString(4, c.getTelefono());
+            PreparedStatement ps = con.prepareStatement("UPDATE cliente SET nombre=?, identificacion=?, correo=?, telefono=? WHERE id=?");
+            ps.setString(1, cl.getNombre());
+            ps.setString(2, cl.getIdentificacion());
+            ps.setString(3, cl.getCorreo());
+            ps.setString(4, cl.getTelefono());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -42,9 +44,9 @@ public class GestionarCliente_Implement implements GestionCliente {
     @Override
     public void Eliminar(int id) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("DELETE FROM Cliente WHERE id = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM cliente WHERE id=?");
             ps.setInt(1, id);
-            int op = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliete?", null, JOptionPane.YES_NO_OPTION);
+            int op = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliente?", null, JOptionPane.YES_NO_OPTION);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -53,8 +55,27 @@ public class GestionarCliente_Implement implements GestionCliente {
     
     @Override
     public ArrayList<Cliente> Listar() {
-        System.out.println("");
-        return null;
+        ArrayList<Cliente> clientes = new ArrayList<>();
+
+        try (Connection con = c.Conexion()) {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM cliente");
+
+            while (rs.next()) {
+                Cliente Cl = new Cliente(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("identificacion"),
+                        rs.getString("correo"),
+                        rs.getString("celular")
+                );
+                clientes.add(Cl);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return clientes;
     }
     
     /*
@@ -88,9 +109,22 @@ public class GestionarCliente_Implement implements GestionCliente {
 
     @Override
     public Cliente Buscar(int id) {
-        System.out.println("");
-        return null;
+        Cliente Cl = new Cliente();
+        try (Connection con = c.Conexion()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
+            ps.setInt(1, id);    
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Cl.setId(rs.getInt(1));
+                Cl.setNombre(rs.getString(2));
+                Cl.setIdentificacion(rs.getString(3));
+                Cl.setCorreo(rs.getString(4));
+                Cl.setTelefono(rs.getString(5));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Cl;
     }
-
 }
-

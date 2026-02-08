@@ -61,11 +61,11 @@ public class Cliente {
     @Override
     public String toString() {
         return """
-                Id:                   %s
-                Nombre:               %s
-                Identificacion:       %s
-                Correo:               %s
-                Celular:              %s
+                  Id:                   %s
+                  Nombre:               %s
+                  Identificacion:       %s
+                  Correo:               %s
+                  Celular:              %s
                """.formatted(id, nombre, identificacion, correo, telefono);
     }
 }
