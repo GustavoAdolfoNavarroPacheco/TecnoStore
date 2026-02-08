@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GestionarCliente_Implement implements GestionCliente {
+
     Conexion c = new Conexion();
 
     @Override
@@ -27,20 +28,23 @@ public class GestionarCliente_Implement implements GestionCliente {
             System.out.println(e.getMessage());
         }
     }
-    
+
     @Override
     public void Actualizar(Cliente cl, int id) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE cliente SET nombre=?, identificacion=?, correo=?, telefono=? WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE cliente SET nombre=?, identificacion=?, correo=?, celular=? WHERE id=?");
             ps.setString(1, cl.getNombre());
             ps.setString(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());
             ps.setString(4, cl.getTelefono());
+            ps.setInt(5, id);
+
+            ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     @Override
     public void Eliminar(int id) {
         try (Connection con = c.Conexion()) {
@@ -48,11 +52,18 @@ public class GestionarCliente_Implement implements GestionCliente {
             ps.setInt(1, id);
             int op = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliente?", null, JOptionPane.YES_NO_OPTION);
 
+            if (op == JOptionPane.YES_OPTION) {
+                ps.executeUpdate();
+                System.out.println("Cliente Eliminado Correctamente!");
+            } else {
+                System.out.println("Operacion Cancelada!");
+            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     @Override
     public ArrayList<Cliente> Listar() {
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -77,7 +88,7 @@ public class GestionarCliente_Implement implements GestionCliente {
 
         return clientes;
     }
-    
+
     /*
     @Override
     public Cliente Buscar(int id) {
@@ -99,8 +110,7 @@ public class GestionarCliente_Implement implements GestionCliente {
         }
         return c;
     }
-    */
-    
+     */
     @Override
     public boolean VerificarID(String identificacion) {
         System.out.println("");
@@ -112,7 +122,7 @@ public class GestionarCliente_Implement implements GestionCliente {
         Cliente Cl = new Cliente();
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
-            ps.setInt(1, id);    
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -121,6 +131,7 @@ public class GestionarCliente_Implement implements GestionCliente {
                 Cl.setIdentificacion(rs.getString(3));
                 Cl.setCorreo(rs.getString(4));
                 Cl.setTelefono(rs.getString(5));
+                return Cl;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

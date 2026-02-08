@@ -5,15 +5,11 @@ import java.util.Scanner;
 import Controler.GestionarCliente_Implement;
 import Controler.GestionCliente;
 import Model.Cliente;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MenuCliente {
     
-    Conexion Co = new Conexion();
     
     public void MenuCliente() {
         int op = 0;
@@ -41,7 +37,7 @@ public class MenuCliente {
             switch (op) {
                 case 1 -> Registrar();
                 case 2 -> Actualizar();
-                case 3 -> System.out.println("En Desarrollo, Vuelva Pronto!"); // Eliminar();
+                case 3 -> Eliminar();
                 case 4 -> Listar();
                 case 5 -> Buscar();
             }
@@ -70,7 +66,7 @@ public class MenuCliente {
     
     private void Actualizar() {
         System.out.println("========================================");
-        System.out.println("  ID Cliente a Actualizar: ");
+        System.out.print("  ID Cliente a Actualizar: ");
         int Id = new Scanner(System.in).nextInt();
         
         Cliente Cl = Gc.Buscar(Id);
@@ -114,6 +110,29 @@ public class MenuCliente {
                     System.out.println("Actualizacion Realizada!");
             }
             Gc.Actualizar(Cl, Id);
+        } else{
+            System.out.println("Cliente no Encontrado!");
+        }
+    }
+    
+    private void Eliminar() {
+        System.out.println("""
+                               ========================================
+                               =               ELIMINAR               =
+                               ========================================
+                               """);
+        System.out.print("ID Cliente a Eliminar: ");
+        int Id = new Scanner(System.in).nextInt();
+        
+        Cliente Cl = Gc.Buscar(Id);
+        
+        if (Cl != null) {
+            System.out.println("========================================");
+            System.out.println("   Datos de " + Cl.getNombre() + ": ");
+            System.out.println(Cl);
+            System.out.println("========================================");
+
+            Gc.Eliminar(Id);
         } else{
             System.out.println("Cliente no Encontrado!");
         }
