@@ -50,7 +50,7 @@ public class GestionarCliente_Implement implements GestionCliente {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM cliente WHERE id=?");
             ps.setInt(1, id);
-            int op = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliente?", null, JOptionPane.YES_NO_OPTION);
+            int op = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliente?", "Confirmacion", JOptionPane.YES_NO_OPTION);
 
             if (op == JOptionPane.YES_OPTION) {
                 ps.executeUpdate();
@@ -89,28 +89,6 @@ public class GestionarCliente_Implement implements GestionCliente {
         return clientes;
     }
 
-    /*
-    @Override
-    public Cliente Buscar(int id) {
-        Cliente c = new Cliente();
-        Gestion gc = new GestionarCelularImpl();
-        try (Connection con = c.conectar()) {
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from cliente where id=" + id);
-            while (rs.next()) {
-                c.setId(rs.getInt(1));
-                c.setNombre(rs.getString(2));
-                c.setIdentificacion(rs.getString(3));
-                c.setCorreo(rs.getString(4));
-                c.setTelefono(rs.getString(5));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return c;
-    }
-     */
     @Override
     public boolean VerificarID(String identificacion) {
         System.out.println("");

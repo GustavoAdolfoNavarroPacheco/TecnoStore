@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface GestionCelular {
 
-    void Guardar(Celular ce);
+    void Registrar(Celular ce);
 
     void Actualizar(Celular ce, int id);
 

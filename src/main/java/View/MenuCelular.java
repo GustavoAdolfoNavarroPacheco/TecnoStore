@@ -2,22 +2,22 @@ package View;
 
 import Controler.Conexion;
 import java.util.Scanner;
-import Controler.GestionarCliente_Implement;
-import Controler.GestionCliente;
-import Model.Cliente;
+import Controler.GestionarCelular_Implement;
+import Controler.GestionCelular;
+import Model.Celular;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class MenuCliente {
+public class MenuCelular {
     
     
-    public void MenuCliente() {
+    public void MenuCelular() {
         int op = 0;
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println("""
                                 ========================================
-                                =         TECNOSTORE - CLIENTE         = 
+                                =         TECNOSTORE - CELULAR         = 
                                 ========================================
                                 = [1] Registrar.                       =
                                 = [2] Actualizar.                      =
@@ -43,74 +43,90 @@ public class MenuCliente {
         } while (op != 6);
     }
     
-    GestionCliente Gc = new GestionarCliente_Implement();
+    GestionCelular Gc = new GestionarCelular_Implement();
     
     private void Registrar() {
-        Cliente Cl = new Cliente();
+        Celular Ce = new Celular();
         
-        System.out.println("Nombre: ");
-        Cl.setNombre(new Scanner(System.in).nextLine());
+        System.out.println("Modelo: ");
+        Ce.setModelo(new Scanner(System.in).nextLine());
         
-        System.out.println("ID: ");
-        Cl.setIdentificacion(new Scanner(System.in).nextLine());
+        System.out.println("Sistema Operativo: ");
+        Ce.setSistema_operativo(new Scanner(System.in).nextLine());
         
-        System.out.println("Correo Electronico: ");
-        Cl.setCorreo(new Scanner(System.in).nextLine());
+        System.out.println("Gama: ");
+        Ce.setGama(new Scanner(System.in).nextLine());
         
-        System.out.println("Telefono/Celular: ");
-        Cl.setTelefono(new Scanner(System.in).nextLine());
+        System.out.println("Precio: ");
+        Ce.setPrecio(new Scanner(System.in).nextLine());
         
-        Gc.Registrar(Cl);
+        System.out.println("Stock: ");
+        Ce.setStock(new Scanner(System.in).nextLine());
+        
+        System.out.println("Marca: ");
+        Ce.setId_marca(new Scanner(System.in).nextLine());
+        
+        Gc.Registrar(Ce);
     }
     
     private void Actualizar() {
         System.out.println("========================================");
-        System.out.print("  ID Cliente a Actualizar: ");
+        System.out.print("  ID Celular a Actualizar: ");
         int Id = new Scanner(System.in).nextInt();
         
-        Cliente Cl = Gc.Buscar(Id);
+        Celular Ce = Gc.Buscar(Id);
         
-        if (Cl != null) {
+        if (Ce != null) {
             System.out.println("========================================");
-            System.out.println("   Datos de " + Cl.getNombre() + ": ");
-            System.out.println(Cl);
+            System.out.println("   Datos de " + Ce.getModelo() + ": ");
+            System.out.println(Ce);
             System.out.println("""
                                 ========================================
                                 = Seleccione opcion a modificar:       =
-                                = [1] Nombre.                          =
-                                = [2] Identificacion.                  =
-                                = [3] Correo.                          =
-                                = [4] Telefono.                        =
+                                = [1] Modelo.                          =
+                                = [2] Sistema Operativo.               =
+                                = [3] Gama.                            =
+                                = [4] Precio.                          =
+                                = [5] Stock.                           =
+                                = [6] Marca.                        =
                                 ========================================
                                """);
             int op = new Scanner(System.in).nextInt();
             
-            while (op < 1 || op > 4) {
+            while (op < 1 || op > 6) {
                 System.out.println("Error! Ingrese una opcion valida!");
                 op = new Scanner(System.in).nextInt();
             }
             switch(op){
                 case 1:
-                    System.out.println("Ingrese el nuevo Nombre: ");
-                    Cl.setNombre(new Scanner(System.in).nextLine());
+                    System.out.println("Ingrese el nuevo Modelo: ");
+                    Ce.setModelo(new Scanner(System.in).nextLine());
                     System.out.println("Actualizacion Realizada!");
                     break;
                 case 2:
-                    System.out.println("Ingrese el nuevo ID: ");
-                    Cl.setIdentificacion(new Scanner(System.in).nextLine());
+                    System.out.println("Ingrese el nuevo Sistema Operativo: ");
+                    Ce.setSistema_operativo(new Scanner(System.in).nextLine());
                     System.out.println("Actualizacion Realizada!");
                 case 3:
-                    System.out.println("Ingrese el nuevo Correo: ");
-                    Cl.setCorreo(new Scanner(System.in).nextLine());
+                    System.out.println("Ingrese la nueva Gama: ");
+                    Ce.setGama(new Scanner(System.in).nextLine());
                     System.out.println("Actualizacion Realizada!");
                 case 4:
-                    System.out.println("Ingrese el nuevo Telefono: ");
-                    Cl.setTelefono(new Scanner(System.in).nextLine());
+                    System.out.println("Ingrese el nuevo Precio: ");
+                    Ce.setPrecio(new Scanner(System.in).nextLine());
+                    System.out.println("Actualizacion Realizada!");
+                case 5:
+                    System.out.println("Ingrese el nuevo Stock: ");
+                    Ce.setStock(new Scanner(System.in).nextLine());
+                    System.out.println("Actualizacion Realizada!");
+                case 6:
+                    System.out.println("Ingrese la nueva Marca ");
+                    Ce.setId_marca(new Scanner(System.in).nextLine());
                     System.out.println("Actualizacion Realizada!");
             }
-            Gc.Actualizar(Cl, Id);
+            Gc.Actualizar(Ce, Id);
         } else{
-            System.out.println("Cliente no Encontrado!");
+            System.out.println("Celular no Encontrado!");
         }
     }
     
@@ -120,33 +136,33 @@ public class MenuCliente {
                                =               ELIMINAR               =
                                ========================================
                                """);
-        System.out.print("ID Cliente a Eliminar: ");
+        System.out.print("ID Celular a Eliminar: ");
         int Id = new Scanner(System.in).nextInt();
         
-        Cliente Cl = Gc.Buscar(Id);
+        Celular Ce = Gc.Buscar(Id);
         
-        if (Cl != null) {
+        if (Ce != null) {
             System.out.println("========================================");
-            System.out.println("   Datos de " + Cl.getNombre() + ": ");
-            System.out.println(Cl);
+            System.out.println("   Datos de " + Ce.getModelo() + ": ");
+            System.out.println(Ce);
             System.out.println("========================================");
 
             Gc.Eliminar(Id);
         } else{
-            System.out.println("Cliente no Encontrado!");
+            System.out.println("Celular no Encontrado!");
         }
     }
     
     private void Listar() {
-        ArrayList<Cliente> clientes = Gc.Listar();
+        ArrayList<Celular> Celulares = Gc.Listar();
         System.out.println("""
                                ========================================
                                =                LISTAR                =
                                ========================================
-                                 Lista de Clientes:
+                                 Lista de Celulares:
                                """);
-        for (Cliente Cl : clientes) {
-            System.out.println(Cl);
+        for (Celular Ce : Celulares) {
+            System.out.println(Ce);
         }
     }
 
@@ -157,16 +173,16 @@ public class MenuCliente {
                            =                BUSCAR                =
                            ========================================
                            """);
-        System.out.print("Ingrese el ID de la persona a buscar: ");
+        System.out.print("Ingrese el ID del Celular a buscar: ");
         int Id = new Scanner(System.in).nextInt();
-        Cliente Cl = Gc.Buscar(Id);
-        if (Cl != null) {
+        Celular Ce = Gc.Buscar(Id);
+        if (Ce != null) {
             System.out.println("========================================");
-            System.out.println("   Datos de " + Cl.getNombre() + ": ");
-            System.out.println(Cl);
+            System.out.println("   Datos de " + Ce.getModelo() + ": ");
+            System.out.println(Ce);
             System.out.println("========================================");
         } else{
-            System.out.println("Cliente no Encontrado!");
+            System.out.println("Celular no Encontrado!");
         } 
     }
 }

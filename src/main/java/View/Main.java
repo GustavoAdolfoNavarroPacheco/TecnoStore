@@ -7,7 +7,10 @@ public class Main {
     public void MenuPrincipal() {
         int op = 0;
         Scanner sc = new Scanner(System.in);
-        MenuCliente mc = new MenuCliente();
+        MenuCliente mCl = new MenuCliente();
+        MenuCelular mCe = new MenuCelular();
+        // MenuGestionVentas mGv = new MenuGestionVentas();
+        // MenuReportes mRe = new MenuReportes();
         do {
             System.out.println("""
                                 ========================================
@@ -27,10 +30,10 @@ public class Main {
                 op = sc.nextInt();
             }
             switch (op) {
-                case 1 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mc.MenuCliente();
-                case 2 -> mc.MenuCliente();
-                case 3 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mc.MenuCliente();
-                case 4 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mc.MenuCliente();
+                case 1 -> mCe.MenuCelular();
+                case 2 -> mCl.MenuCliente();
+                case 3 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mGv.MenuGestionVentas();
+                case 4 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mRe.MenuReportes();
             }
         } while (op != 0);
     }
