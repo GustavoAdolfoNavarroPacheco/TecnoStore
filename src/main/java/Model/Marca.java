@@ -9,7 +9,12 @@ public class Marca {
 
     public static List<Marca> listaMarcas = new ArrayList<>();
     
-    public Marca(int id, String samsung) {
+    public Marca(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
+    public Marca(int id) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -36,16 +41,8 @@ public class Marca {
     @Override
     public String toString() {
         return """
-                Id:                   %s
-                Nombre:               %s
+               Id:                   %s
+               Nombre:               %s
                """.formatted(id, nombre);
-    }
-    
-     public static void MarcasIniciales() {
-        if (listaMarcas.isEmpty()) {
-            Marca marca1 = new Marca(1, "Samsung");
-            Marca marca2 = new Marca(2, "Apple");
-            Marca marca3 = new Marca(3, "Motorola");
-        }
     }
 }

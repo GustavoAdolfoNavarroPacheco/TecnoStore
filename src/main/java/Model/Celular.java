@@ -4,7 +4,7 @@ public class Celular {
     private int id;
     private String modelo;
     private String sistema_operativo;
-    private Gama gama;
+    public Gama gama;
     private int stock;
     private double precio;
     private Marca id_marca;
@@ -83,10 +83,12 @@ public class Celular {
     public String toString() {
         return """
                 Id:                  %s
-                Stock:               %s
                 Modelo:              %s
                 Sistema Operativo:   %s
-                Marca:               %s
-               """.formatted(id, stock, modelo, sistema_operativo, gama, id_marca);
+                Gama:                %s
+                Stock:               %s
+                Precio:              %s
+                Marca                %s
+               """.formatted(id, modelo, sistema_operativo, gama, stock, precio, id_marca);
     }
 }

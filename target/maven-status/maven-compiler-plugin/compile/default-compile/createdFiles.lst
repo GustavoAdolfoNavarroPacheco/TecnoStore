@@ -6,6 +6,7 @@ Controler\GestionCliente.class
 Model\Cliente.class
 com\mycompany\tecnostore\TecnoStore.class
 Model\Gama.class
+Controler\Validaciones.class
 View\Main.class
 Controler\Conexion.class
 View\MenuCelular.class

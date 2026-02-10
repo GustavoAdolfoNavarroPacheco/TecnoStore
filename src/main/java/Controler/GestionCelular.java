@@ -1,6 +1,7 @@
 package Controler;
 
 import Model.Celular;
+import Model.Marca;
 import java.util.ArrayList;
 
 public interface GestionCelular {
@@ -12,6 +13,8 @@ public interface GestionCelular {
     void Eliminar(int id);
 
     ArrayList<Celular> Listar();
+    
+    ArrayList<Marca> ListarMarca();
 
     Celular Buscar(int id);
 }

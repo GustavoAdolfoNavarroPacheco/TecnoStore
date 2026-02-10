@@ -21,10 +21,10 @@ public class GestionarCelular_Implement implements GestionCelular {
             PreparedStatement ps = con.prepareStatement("INSERT INTO celular(modelo, sistema_operativo, gama, precio, stock, id_marca) VALUES (?,?,?,?,?,?)");
             ps.setString(1, Ce.getModelo());
             ps.setString(2, Ce.getSistema_operativo());
-            ps.setObject(3, Ce.getGama());
+            ps.setString(3, Ce.getGama().name());
             ps.setString(4, String.valueOf(Ce.getStock()));
             ps.setString(5, String.valueOf(Ce.getPrecio()));
-            ps.setString(6, String.valueOf(Ce.getId_marca().getId()));
+            ps.setInt(6, Ce.getId_marca().getId());
 
             ps.executeUpdate();
             System.out.println("Registro Realizado con Exito!");
@@ -36,12 +36,12 @@ public class GestionarCelular_Implement implements GestionCelular {
     @Override
     public void Actualizar(Celular Ce, int id) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE celular SET modelo=?, sistema_operativo=?, gama=?, precio=?, stock=?, id_marca=?, WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE celular SET modelo=?, sistema_operativo=?, gama=?, precio=?, stock=?, id_marca=? WHERE id=?");
             ps.setString(1, Ce.getModelo());
             ps.setString(2, Ce.getSistema_operativo());
             ps.setString(3, Ce.getGama().name());
-            ps.setInt(4, Ce.getStock());
-            ps.setDouble(5, Ce.getPrecio());
+            ps.setDouble(4, Ce.getPrecio());
+            ps.setInt(5, Ce.getStock());
             ps.setInt(6, Ce.getId_marca().getId());
             ps.setInt(7, id);
 
@@ -76,17 +76,23 @@ public class GestionarCelular_Implement implements GestionCelular {
 
         try (Connection con = c.Conexion()) {
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM celular");
+            ResultSet rs = st.executeQuery("SELECT  ce.id, ce.modelo, ce.sistema_operativo, ce.gama, ce.stock, ce.precio, m.nombre AS marca FROM celular ce INNER JOIN marca m ON ce.id_marca = m.id;");
             while (rs.next()) {
-                Celular ce = new Celular(
-                        rs.getInt("id"),
-                        rs.getString("modelo"),
-                        rs.getString("sistema_operativo"),
-                        Gama.valueOf(rs.getString("gama")),
-                        rs.getInt("stock"),
-                        rs.getDouble("precio"),
-                        new Marca(rs.getInt("id_marca"), "Samsung")
-                );
+                Celular ce = new Celular();
+                ce.setId(rs.getInt(1));
+                ce.setModelo(rs.getString(2));
+                ce.setSistema_operativo(rs.getString(3));
+
+                ce.setStock(rs.getInt(5));
+                ce.setPrecio(rs.getDouble(6));
+
+                String ga = rs.getString(4);      
+                if (ga != null) {
+                    ce.setGama(Gama.valueOf(ga.trim()));
+                }
+                
+                Marca ma = new Marca();
+                ma.setNombre(rs.getString(7));
 
                 Celulares.add(ce);
             }
@@ -94,6 +100,27 @@ public class GestionarCelular_Implement implements GestionCelular {
             System.out.println(e.getMessage());
         }
         return Celulares;
+    }
+    
+    @Override
+    public ArrayList<Marca> ListarMarca() {
+        ArrayList<Marca> Marcas = new ArrayList<>();
+
+        try (Connection con = c.Conexion()) {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM marca");
+            while (rs.next()) {
+                Marca ma = new Marca(
+                        rs.getInt("id"),
+                        rs.getString("nombre")
+                );
+
+                Marcas.add(ma);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Marcas;
     }
 
     @Override
@@ -111,7 +138,7 @@ public class GestionarCelular_Implement implements GestionCelular {
                 Ce.setGama(Gama.valueOf(rs.getString("gama")));
                 Ce.setStock(rs.getInt("stock"));
                 Ce.setPrecio(rs.getDouble("precio"));
-                Ce.setId_marca(new Marca(rs.getInt("id_marca"), "Samsung"));
+                Ce.setId_marca(new Marca(rs.getInt("id_marca")));
                 return Ce;
             }
         } catch (SQLException e) {

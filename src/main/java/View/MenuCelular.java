@@ -12,9 +12,10 @@ import java.util.ArrayList;
 
 public class MenuCelular {
 
+    Scanner sc = new Scanner(System.in);
+
     public void MenuCelular() {
         int op = 0;
-        Scanner sc = new Scanner(System.in);
         do {
             System.out.println("""
                                 ========================================
@@ -54,7 +55,7 @@ public class MenuCelular {
     private void Registrar() {
         Celular Ce = new Celular();
         Gama ga = null;
-        
+
         System.out.println("""
                            ========================================
                            =          REGISTRAR CELULAR           = 
@@ -75,7 +76,7 @@ public class MenuCelular {
                                
                                Ingresa una opcion:
                                """);
-            Scanner sc = new Scanner(System.in);
+            
             int op = sc.nextInt();
             switch (op) {
                 case 1 ->
@@ -91,6 +92,7 @@ public class MenuCelular {
             }
             break;
         }
+        Ce.setGama(ga);
 
         System.out.println("Stock: ");
         while (true) {
@@ -112,28 +114,24 @@ public class MenuCelular {
             }
         }
 
-        Marca marcaElegida = null;
-        for (Marca m : Marca.listaMarcas) {
-            System.out.println(m);
+        ArrayList<Marca> marcas = Gc.ListarMarca();
+
+        marcas.forEach(System.out::println);
+
+        System.out.print("Ingrese una opcion: ");
+        int idMarca = sc.nextInt();
+
+        Marca marcaSeleccionada = marcas.stream()
+                .filter(m -> m.getId() == idMarca)
+                .findFirst()
+                .orElse(null);
+
+        if (marcaSeleccionada == null) {
+            System.out.println("La marca seleccionada no existe!");
+            return;
         }
 
-        while (marcaElegida == null) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Seleccione una opcion: ");
-            int idMarca = sc.nextInt();
-            sc.nextLine();
-
-            marcaElegida = Marca.listaMarcas.stream()
-                    .filter(marca -> marca.getId() == idMarca)
-                    .findFirst()
-                    .orElse(null);
-
-            if (marcaElegida == null) {
-                System.out.println("La marca ingresada no es valida. Intente nuevamente.");
-            }
-        }
-
-        Ce.setId_marca(marcaElegida);
+        Ce.setId_marca(marcaSeleccionada);
 
         Gc.Registrar(Ce);
     }
@@ -158,7 +156,7 @@ public class MenuCelular {
                                 = [3] Gama.                            =
                                 = [4] Precio.                          =
                                 = [5] Stock.                           =
-                                = [6] Marca.                        =
+                                = [6] Marca.                           =
                                 ========================================
                                """);
             int op = new Scanner(System.in).nextInt();
@@ -177,21 +175,20 @@ public class MenuCelular {
                     System.out.println("Ingrese el nuevo Sistema Operativo: ");
                     Ce.setSistema_operativo(new Scanner(System.in).nextLine());
                     System.out.println("Actualizacion Realizada!");
+                    break;
                 case 3:
                     System.out.println("Ingrese la nueva Gama: ");
-                    System.out.println("Gama: ");
                     while (true) {
-                        System.out.println("""
-                                Gama:
-                               
+                        System.out.print("""
+                               Gama:
                                [1] Baja.
                                [2] Media.
                                [3] Alta.
+                               
+                               Ingresa una opcion:
                                """);
-                        System.out.print(" Ingresa un numero segun la Gama");
-                        Scanner sc = new Scanner(System.in);
                         int option = sc.nextInt();
-                        switch (op) {
+                        switch (option) {
                             case 1 ->
                                 ga = Gama.Baja;
                             case 2 ->
@@ -199,26 +196,47 @@ public class MenuCelular {
                             case 3 ->
                                 ga = Gama.Alta;
                             default -> {
-                                System.out.println("Opción inválida");
+                                System.out.println("Opcion invalida");
                                 continue;
                             }
                         }
                         break;
                     }
+                    Ce.setGama(ga);
                     System.out.println("Actualizacion Realizada!");
+                    break;
                 case 4:
                     System.out.println("Ingrese el nuevo Precio: ");
                     Ce.setPrecio(new Scanner(System.in).nextDouble());
                     System.out.println("Actualizacion Realizada!");
+                    break;
                 case 5:
                     System.out.println("Ingrese el nuevo Stock: ");
                     Ce.setStock(new Scanner(System.in).nextInt());
                     System.out.println("Actualizacion Realizada!");
+                    break;
                 case 6:
-                    System.out.println("En Desarrollo! Vuelva pronto!");
-                    // System.out.println("Ingrese la nueva Marca ");
-                    // Ce.setId_marca(new Scanner(System.in).nextLine());
-                    // System.out.println("Actualizacion Realizada!");
+                    ArrayList<Marca> marcas = Gc.ListarMarca();
+
+                    marcas.forEach(System.out::println);
+
+                    System.out.print("Ingrese una opcion: ");
+                    int idMarca = sc.nextInt();
+
+                    Marca marcaSeleccionada = marcas.stream()
+                            .filter(m -> m.getId() == idMarca)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (marcaSeleccionada == null) {
+                        System.out.println("La marca seleccionada no existe!");
+                        return;
+                    }
+
+                    Ce.setId_marca(marcaSeleccionada);
+
+                    System.out.println("Actualizacion Realizada!");
+                    break;
             }
             Gc.Actualizar(Ce, Id);
         } else {
@@ -259,6 +277,14 @@ public class MenuCelular {
                                """);
         for (Celular Ce : Celulares) {
             System.out.println(Ce);
+        }
+    }
+
+    private void ListarMarca() {
+        ArrayList<Marca> marcas = Gc.ListarMarca();
+        System.out.println("Marcas: ");
+        for (Marca ma : marcas) {
+            System.out.println(ma);
         }
     }
 
