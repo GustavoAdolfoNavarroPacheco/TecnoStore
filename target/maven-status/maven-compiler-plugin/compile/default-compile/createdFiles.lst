@@ -8,6 +8,7 @@ com\mycompany\tecnostore\TecnoStore.class
 Model\Gama.class
 View\Main.class
 Controler\Conexion.class
+View\MenuCelular.class
 View\MenuCliente.class
 Controler\GestionarCelular_Implement.class
 Controler\GestionarCliente_Implement.class

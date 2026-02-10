@@ -2,24 +2,25 @@ package Model;
 
 public class Celular {
     private int id;
-    private int stock;
-    private double precio;
     private String modelo;
     private String sistema_operativo;
     private Gama gama;
+    private int stock;
+    private double precio;
     private Marca id_marca;
 
-    public Celular(int id, int stock, double precio, String modelo, String sistema_operativo, Gama gama, Marca id_marca) {
+    public Celular(int id, String modelo, String sistema_operativo, Gama gama, int stock, double precio, Marca id_marca) {
         this.id = id;
-        this.stock = stock;
-        this.precio = precio;
         this.modelo = modelo;
         this.sistema_operativo = sistema_operativo;
         this.gama = gama;
+        this.stock = stock;
+        this.precio = precio;
         this.id_marca = id_marca;
     }
 
     public Celular() {
+        
     }
 
     public int getId() {
@@ -28,22 +29,6 @@ public class Celular {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
     }
 
     public String getModelo() {
@@ -70,6 +55,22 @@ public class Celular {
         this.gama = gama;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     public Marca getId_marca() {
         return id_marca;
     }
@@ -77,8 +78,7 @@ public class Celular {
     public void setId_marca(Marca id_marca) {
         this.id_marca = id_marca;
     }
-
-
+    
     @Override
     public String toString() {
         return """
