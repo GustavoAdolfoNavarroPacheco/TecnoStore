@@ -48,7 +48,6 @@ public class Venta {
         this.id_cliente = id_Cliente;
     }
 
-
     @Override
     public String toString() {
         return """
@@ -56,6 +55,6 @@ public class Venta {
                 Fecha:                %s
                 Total:                %s
                 Cliente:              %s
-               """.formatted(id, fecha, total, id_cliente);
+               """.formatted(id, fecha, total, id_cliente != null ? id_cliente.getId() : "N/A");
     }
 }

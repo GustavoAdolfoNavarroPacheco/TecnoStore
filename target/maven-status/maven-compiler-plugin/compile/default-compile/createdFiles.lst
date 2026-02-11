@@ -1,5 +1,6 @@
 Controler\GestionCelular.class
 Model\Marca.class
+View\MenuGestionVentas.class
 Model\Detalle_Venta.class
 Model\Venta.class
 Controler\GestionCliente.class
@@ -9,7 +10,9 @@ Model\Gama.class
 Controler\Validaciones.class
 View\Main.class
 Controler\Conexion.class
+Controler\GestionarVenta_Implement.class
 View\MenuCelular.class
+Controler\GestionVenta.class
 View\MenuCliente.class
 Controler\GestionarCelular_Implement.class
 Controler\GestionarCliente_Implement.class

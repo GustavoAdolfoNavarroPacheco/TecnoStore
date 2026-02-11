@@ -52,7 +52,7 @@ public class MenuCliente {
         Cl.setNombre(new Scanner(System.in).nextLine());
         
         System.out.println("ID: ");
-        Cl.setIdentificacion(new Scanner(System.in).nextLine());
+        Cl.setIdentificacion(new Scanner(System.in).nextInt());
         
         System.out.println("Correo Electronico: ");
         Cl.setCorreo(new Scanner(System.in).nextLine());
@@ -97,7 +97,7 @@ public class MenuCliente {
                     break;
                 case 2:
                     System.out.println("Ingrese el nuevo ID: ");
-                    Cl.setIdentificacion(new Scanner(System.in).nextLine());
+                    Cl.setIdentificacion(new Scanner(System.in).nextInt());
                     System.out.println("Actualizacion Realizada!");
                 case 3:
                     System.out.println("Ingrese el nuevo Correo: ");

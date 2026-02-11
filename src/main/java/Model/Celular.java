@@ -88,7 +88,8 @@ public class Celular {
                 Gama:                %s
                 Stock:               %s
                 Precio:              %s
-                Marca                %s
-               """.formatted(id, modelo, sistema_operativo, gama, stock, precio, id_marca);
+                Marca:               %s
+               """.formatted(id, modelo, sistema_operativo, gama, stock, precio, id_marca != null ? id_marca.getNombre() : "N/A");
     }
 }
+

@@ -2,8 +2,10 @@ C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\com
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\Conexion.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarCelular_Implement.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarCliente_Implement.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarVenta_Implement.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionCelular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionCliente.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionVenta.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\Validaciones.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Model\Celular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Model\Cliente.java
@@ -14,3 +16,4 @@ C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Mod
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\Main.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuCelular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuCliente.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuGestionVentas.java

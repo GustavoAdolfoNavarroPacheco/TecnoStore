@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GestionarCelular_Implement implements GestionCelular {
+
     Conexion c = new Conexion();
 
     @Override
@@ -76,7 +77,8 @@ public class GestionarCelular_Implement implements GestionCelular {
 
         try (Connection con = c.Conexion()) {
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT  ce.id, ce.modelo, ce.sistema_operativo, ce.gama, ce.stock, ce.precio, m.nombre AS marca FROM celular ce INNER JOIN marca m ON ce.id_marca = m.id;");
+            ResultSet rs = st.executeQuery("SELECT ce.id, ce.modelo, ce.sistema_operativo, ce.gama, ce.stock, ce.precio, m.id AS id_marca, m.nombre AS marca FROM celular ce INNER JOIN marca m ON ce.id_marca = m.id;");
+            System.out.println("Ejecutando consulta...");
             while (rs.next()) {
                 Celular ce = new Celular();
                 ce.setId(rs.getInt(1));
@@ -86,14 +88,15 @@ public class GestionarCelular_Implement implements GestionCelular {
                 ce.setStock(rs.getInt(5));
                 ce.setPrecio(rs.getDouble(6));
 
-                String ga = rs.getString(4);      
+                String ga = rs.getString(4);
                 if (ga != null) {
                     ce.setGama(Gama.valueOf(ga.trim()));
                 }
-                
+
                 Marca ma = new Marca();
                 ma.setNombre(rs.getString(7));
 
+                ce.setId_marca(ma);
                 Celulares.add(ce);
             }
         } catch (SQLException e) {
@@ -101,7 +104,7 @@ public class GestionarCelular_Implement implements GestionCelular {
         }
         return Celulares;
     }
-    
+
     @Override
     public ArrayList<Marca> ListarMarca() {
         ArrayList<Marca> Marcas = new ArrayList<>();
@@ -125,21 +128,27 @@ public class GestionarCelular_Implement implements GestionCelular {
 
     @Override
     public Celular Buscar(int id) {
-        Celular Ce = new Celular();
+        Celular Ce = null;
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM celular WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("SELECT c.*, m.nombre AS nombre_marca FROM celular c INNER JOIN marca m ON c.id_marca = m.id WHERE c.id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                Ce = new Celular();
+
                 Ce.setId(rs.getInt("id"));
                 Ce.setModelo(rs.getString("modelo"));
                 Ce.setSistema_operativo(rs.getString("sistema_operativo"));
                 Ce.setGama(Gama.valueOf(rs.getString("gama")));
                 Ce.setStock(rs.getInt("stock"));
                 Ce.setPrecio(rs.getDouble("precio"));
-                Ce.setId_marca(new Marca(rs.getInt("id_marca")));
-                return Ce;
+
+                Marca ma = new Marca();
+                ma.setId(rs.getInt("id_marca"));
+                ma.setNombre(rs.getString("nombre_marca"));
+
+                Ce.setId_marca(ma);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

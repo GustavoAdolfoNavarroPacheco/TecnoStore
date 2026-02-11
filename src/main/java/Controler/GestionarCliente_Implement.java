@@ -18,7 +18,7 @@ public class GestionarCliente_Implement implements GestionCliente {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("INSERT INTO cliente(nombre, identificacion, correo, celular) VALUES (?,?,?,?)");
             ps.setString(1, cl.getNombre());
-            ps.setString(2, cl.getIdentificacion());
+            ps.setInt(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());
             ps.setString(4, cl.getTelefono());
 
@@ -34,7 +34,7 @@ public class GestionarCliente_Implement implements GestionCliente {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("UPDATE cliente SET nombre=?, identificacion=?, correo=?, celular=? WHERE id=?");
             ps.setString(1, cl.getNombre());
-            ps.setString(2, cl.getIdentificacion());
+            ps.setInt(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());
             ps.setString(4, cl.getTelefono());
             ps.setInt(5, id);
@@ -76,7 +76,7 @@ public class GestionarCliente_Implement implements GestionCliente {
                 Cliente Cl = new Cliente(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        rs.getString("identificacion"),
+                        rs.getInt("identificacion"),
                         rs.getString("correo"),
                         rs.getString("celular")
                 );
@@ -106,7 +106,7 @@ public class GestionarCliente_Implement implements GestionCliente {
             if (rs.next()) {
                 Cl.setId(rs.getInt(1));
                 Cl.setNombre(rs.getString(2));
-                Cl.setIdentificacion(rs.getString(3));
+                Cl.setIdentificacion(rs.getInt(3));
                 Cl.setCorreo(rs.getString(4));
                 Cl.setTelefono(rs.getString(5));
                 return Cl;

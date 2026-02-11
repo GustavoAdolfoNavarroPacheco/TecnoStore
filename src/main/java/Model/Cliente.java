@@ -3,11 +3,11 @@ package Model;
 public class Cliente {
     private int id;
     private String nombre;
-    private String identificacion;
+    private int identificacion;
     private String correo;
     private String telefono;
 
-    public Cliente(int id, String nombre, String identificacion, String correo, String telefono) {
+    public Cliente(int id, String nombre, int identificacion, String correo, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.identificacion = identificacion;
@@ -34,11 +34,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getIdentificacion() {
+    public int getIdentificacion() {
         return identificacion;
     }
 
-    public void setIdentificacion(String identificacion) {
+    public void setIdentificacion(int identificacion) {
         this.identificacion = identificacion;
     }
 

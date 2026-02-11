@@ -9,7 +9,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         MenuCliente mCl = new MenuCliente();
         MenuCelular mCe = new MenuCelular();
-        // MenuGestionVentas mGv = new MenuGestionVentas();
+        MenuGestionVentas mGv = new MenuGestionVentas();
         // MenuReportes mRe = new MenuReportes();
         do {
             System.out.println("""
@@ -32,7 +32,7 @@ public class Main {
             switch (op) {
                 case 1 -> mCe.MenuCelular();
                 case 2 -> mCl.MenuCliente();
-                case 3 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mGv.MenuGestionVentas();
+                case 3 -> mGv.MenuGestionVentas();
                 case 4 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); // mRe.MenuReportes();
             }
         } while (op != 0);
