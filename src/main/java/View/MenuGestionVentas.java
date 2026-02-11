@@ -3,19 +3,19 @@ package View;
 import java.util.Scanner;
 import Controler.GestionVenta;
 import Controler.GestionarVenta_Implement;
-import Model.Celular;
+import Controler.GestionDetalleVenta;
+import Controler.GestionarDetalleVenta_Implement;
 import Model.Venta;
 import Model.Cliente;
-import Model.Gama;
-import Model.Marca;
+import Model.DetalleVenta;
 import java.util.ArrayList;
 
 public class MenuGestionVentas {
     
+    Scanner sc = new Scanner(System.in);
     public void MenuGestionVentas() {
         
         int op = 0;
-        Scanner sc = new Scanner(System.in);
         do {
             System.out.println("""
                                 ========================================
@@ -37,10 +37,10 @@ public class MenuGestionVentas {
             }
             switch (op) {
                 case 1 -> Registrar();
-                case 2 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); //Actualizar();
-                case 3 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); //Eliminar();
-                case 4 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); //Listar();
-                case 5 -> System.out.println("  En Desarrollo, Vuelva Pronto!"); //Buscar();
+                case 2 -> Actualizar();
+                case 3 -> Eliminar();
+                case 4 -> Listar();
+                case 5 -> Buscar();
             }
         } while (op != 6);
     }
@@ -49,22 +49,18 @@ public class MenuGestionVentas {
     
     private void Registrar() {
         Venta Ve = new Venta();
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("""
                            ========================================
                            =           REGISTRAR VENTA            = 
                            ========================================
                            """);
-        System.out.println("Fecha(YYYY/MM/DD): ");
-        Ve.setFecha(new Scanner(System.in).nextLine());
-
-        System.out.println("Total: ");
-        Ve.setTotal(new Scanner(System.in).nextDouble());
+        
+        Ve.setFecha(java.sql.Date.valueOf(java.time.LocalDate.now()));
 
         ArrayList<Cliente> clientes = Gv.ListarCliente();
 
-    clientes.forEach(System.out::println);
+        clientes.forEach(System.out::println);
 
         System.out.print("Ingrese una opcion: ");
         int idCliente = sc.nextInt();
@@ -78,10 +74,21 @@ public class MenuGestionVentas {
             System.out.println("El cliente seleccionada no existe!");
             return;
         }
-
+        
         Ve.setId_Cliente(clienteSeleccionado);
 
         Gv.Registrar(Ve);
+    }
+    
+    private void RegistrarDv() {
+        DetalleVenta Dv = new DetalleVenta();
+
+        System.out.println("""
+                           ========================================
+                           =    REGISTRAR DETALLE DE LA VENTA     = 
+                           ========================================
+                           """);
+        ListarCelular();
     }
     
     private void Actualizar() {
@@ -98,9 +105,8 @@ public class MenuGestionVentas {
             System.out.println("""
                                 ========================================
                                 = Seleccione opcion a modificar:       =
-                                = [1] Fecha.                           =
-                                = [2] Total.                           =
-                                = [3] Cliente.                         =
+                                = [1] Total.                           =
+                                = [2] Cliente.                         =
                                 ========================================
                                """);
             int op = new Scanner(System.in).nextInt();
@@ -111,16 +117,11 @@ public class MenuGestionVentas {
             }
             switch (op) {
                 case 1:
-                    System.out.println("Ingrese la nueva Fecha: ");
-                    Ve.setFecha(new Scanner(System.in).nextLine());
-                    System.out.println("Actualizacion Realizada!");
-                    break;
-                case 2:
                     System.out.println("Ingrese el nuevo Total: ");
                     Ve.setTotal(new Scanner(System.in).nextInt());
                     System.out.println("Actualizacion Realizada!");
                     break;
-                case 3:
+                case 2:
                     ArrayList<Cliente> Clientes = Gv.ListarCliente();
 
                     Clientes.forEach(System.out::println);
@@ -145,19 +146,62 @@ public class MenuGestionVentas {
             }
             Gv.Actualizar(Ve, Id);
         } else {
-            System.out.println("Celular no Encontrado!");
+            System.out.println("Venta no Encontrada!");
         }
     }
     
     private void Eliminar() {
+        System.out.println("""
+                               ========================================
+                               =               ELIMINAR               =
+                               ========================================
+                               """);
+        System.out.print("Venta a Eliminar: ");
+        int Id = new Scanner(System.in).nextInt();
         
+        Venta Ve = Gv.Buscar(Id);
+        
+        if (Ve != null) {
+            System.out.println("========================================");
+            System.out.println("   Datos de " + Ve.getId() + ": ");
+            System.out.println(Ve);
+            System.out.println("========================================");
+
+            Gv.Eliminar(Id);
+        } else{
+            System.out.println("Cliente no Encontrado!");
+        }
     }
     
     private void Listar() {
-        
+        ArrayList<Venta> Ventas = Gv.Listar();
+        System.out.println("""
+                               ========================================
+                               =                LISTAR                =
+                               ========================================
+                                 Lista de Clientes:
+                               """);
+        for (Venta Ve : Ventas) {
+            System.out.println(Ve);
+        }
     }
     
     private void Buscar() {
-        
+        System.out.println("""
+                           ========================================
+                           =                BUSCAR                =
+                           ========================================
+                           """);
+        System.out.print("Ingrese el ID de la venta a buscar: ");
+        int Id = new Scanner(System.in).nextInt();
+        Venta Ve = Gv.Buscar(Id);
+        if (Ve != null) {
+            System.out.println("========================================");
+            System.out.println("   Datos de " + Ve.getId() + ": ");
+            System.out.println(Ve);
+            System.out.println("========================================");
+        } else{
+            System.out.println("Venta no Encontrada!");
+        } 
     }
 }

@@ -1,12 +1,14 @@
 package Model;
 
+import java.sql.Date;
+
 public class Venta {
     private int id;
-    private String fecha;
+    private Date fecha;
     private double total;
     private Cliente id_cliente;
 
-    public Venta(int id, String fecha, double total, Cliente id_Cliente) {
+    public Venta(int id, Date fecha, double total, Cliente id_Cliente) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
@@ -24,11 +26,11 @@ public class Venta {
         this.id = id;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -55,6 +57,6 @@ public class Venta {
                 Fecha:                %s
                 Total:                %s
                 Cliente:              %s
-               """.formatted(id, fecha, total, id_cliente != null ? id_cliente.getId() : "N/A");
+               """.formatted(id, fecha, total, id_cliente != null ? id_cliente.getNombre() : "N/A");
     }
 }

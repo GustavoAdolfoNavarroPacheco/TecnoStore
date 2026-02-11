@@ -1,11 +1,9 @@
 package View;
 
-import Controler.Conexion;
 import java.util.Scanner;
 import Controler.GestionarCliente_Implement;
 import Controler.GestionCliente;
 import Model.Cliente;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MenuCliente {

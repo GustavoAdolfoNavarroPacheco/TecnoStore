@@ -1,13 +1,13 @@
 package Model;
 
-public class Detalle_Venta {
+public class DetalleVenta {
     private int id;
-    private String cantidad;
-    private String subtotal;
+    private int cantidad;
+    private double subtotal;
     private Venta id_venta;
     private Celular id_celular;
 
-    public Detalle_Venta(int id, String cantidad, String subtotal, Venta id_venta, Celular id_celular) {
+    public DetalleVenta(int id, int cantidad, double subtotal, Venta id_venta, Celular id_celular) {
         this.id = id;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
@@ -15,7 +15,7 @@ public class Detalle_Venta {
         this.id_celular = id_celular;
     }
 
-    public Detalle_Venta() {
+    public DetalleVenta() {
     }
 
     public int getId() {
@@ -26,19 +26,19 @@ public class Detalle_Venta {
         this.id = id;
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public String getSubtotal() {
+    public double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(String subtotal) {
+    public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 
@@ -62,10 +62,11 @@ public class Detalle_Venta {
     public String toString() {
         return """
                 Id:                   %s
-                Nombre:               %s
-                Identificacion:       %s
-                Correo:               %s
+                Cantidad:             %s
+                Subtotal:             %s
+                ID Venta:             %s
                 Celular:              %s
-               """.formatted(id, cantidad, subtotal, id_venta, id_celular);
+               """.formatted(id, cantidad, subtotal,  id_venta != null ? id_venta.getId() : "N/A", id_celular != null ? id_celular.getModelo() : "N/A");
     }
+
 }

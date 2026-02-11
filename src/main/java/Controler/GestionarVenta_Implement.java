@@ -1,9 +1,6 @@
 package Controler;
 
-import Model.Celular;
 import Model.Cliente;
-import Model.Gama;
-import Model.Marca;
 import Model.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +18,7 @@ public class GestionarVenta_Implement implements GestionVenta {
     public void Registrar(Venta Ve) {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("INSERT INTO venta(fecha, total, id_cliente) VALUES (?,?,?)");
-            ps.setString(1, Ve.getFecha());
+            ps.setDate(1, Ve.getFecha());
             ps.setDouble(2, Ve.getTotal());
             ps.setInt(3, Ve.getId_Cliente().getId());
 
@@ -36,7 +33,7 @@ public class GestionarVenta_Implement implements GestionVenta {
     public void Actualizar(Venta Ve, int id) {
         try (Connection con = c.Conexion()) {
             PreparedStatement ps = con.prepareStatement("UPDATE venta SET fecha=?, total=?, id_cliente=? WHERE id=?");
-            ps.setString(1, Ve.getFecha());
+            ps.setDate(1, Ve.getFecha());
             ps.setDouble(2, Ve.getTotal());
             ps.setInt(3, Ve.getId_Cliente().getId());
             ps.setInt(4, id);
@@ -77,11 +74,11 @@ public class GestionarVenta_Implement implements GestionVenta {
             while (rs.next()) {
                 Venta ve = new Venta();
                 ve.setId(rs.getInt(1));
-                ve.setFecha(rs.getString(2));
+                ve.setFecha(rs.getDate(2));
                 ve.setTotal(rs.getDouble(3));
 
                 Cliente cl = new Cliente();
-                cl.setNombre(rs.getString(7));
+                cl.setNombre(rs.getString(4));
 
                 ve.setId_Cliente(cl);
                 Ventas.add(ve);
@@ -128,7 +125,7 @@ public class GestionarVenta_Implement implements GestionVenta {
                 Ve = new Venta();
 
                 Ve.setId(rs.getInt("id"));
-                Ve.setFecha(rs.getString("fecha"));
+                Ve.setFecha(rs.getDate("fecha"));
                 Ve.setTotal(rs.getDouble("total"));
 
                 Cliente Cl = new Cliente();
@@ -142,7 +139,4 @@ public class GestionarVenta_Implement implements GestionVenta {
         }
         return Ve;
     }
-
-    
-    
 }
