@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface GestionVenta {
 
-    void Registrar(Venta ve);
+    int Registrar(Venta ve);
     
     void Actualizar(Venta ve, int id);
 
@@ -17,4 +17,6 @@ public interface GestionVenta {
     ArrayList<Cliente> ListarCliente();
     
     Venta Buscar(int id);
+    
+    double CalcularTotal(double subtotal);
 }

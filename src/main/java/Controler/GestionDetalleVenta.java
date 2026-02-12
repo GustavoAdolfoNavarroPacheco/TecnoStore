@@ -1,5 +1,6 @@
 package Controler;
 
+import Model.Celular;
 import Model.Venta;
 import Model.DetalleVenta;
 import java.util.ArrayList;
@@ -16,5 +17,9 @@ public interface GestionDetalleVenta {
     
     ArrayList<Venta> ListarVenta();
     
+    ArrayList<Celular> ListarCelular();
+    
     DetalleVenta BuscarDv(int id);
+    
+    double SubtotalDv(int cantidad,double precio);
 }

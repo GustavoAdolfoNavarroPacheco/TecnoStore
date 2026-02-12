@@ -155,4 +155,19 @@ public class GestionarCelular_Implement implements GestionCelular {
         }
         return Ce;
     }
+    
+    @Override
+    public void ActualizarStock(int idCelular, int cantidadVendida) {
+
+        try (Connection con = c.Conexion()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE celular SET stock = stock - ? where id = ?");
+            ps.setInt(1, cantidadVendida);
+            ps.setInt(2, idCelular);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 }

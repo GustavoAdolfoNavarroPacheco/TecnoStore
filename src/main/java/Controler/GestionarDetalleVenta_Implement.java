@@ -3,6 +3,8 @@ package Controler;
 import Model.Celular;
 import Model.Cliente;
 import Model.DetalleVenta;
+import Model.Gama;
+import Model.Marca;
 import Model.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,11 +21,12 @@ public class GestionarDetalleVenta_Implement implements GestionDetalleVenta {
     @Override
     public void RegistrarDv(DetalleVenta Dv) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO venta(cantidad, subtotal, id_celular, id_venta) VALUES (?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO detalle_venta(cantidad, subtotal, id_celular, id_venta) VALUES (?,?,?,?)");
             ps.setInt(1, Dv.getCantidad());
             ps.setDouble(2, Dv.getSubtotal());
-            ps.setInt(3, Dv.getId_venta().getId());
-            ps.setInt(4, Dv.getId_celular().getId());
+            ps.setInt(3, Dv.getId_celular().getId());
+            ps.setInt(4, Dv.getId_venta().getId());
+            System.out.println("Ejecutando INSERT detalle venta...");
 
             ps.executeUpdate();
             System.out.println("Registro Realizado con Exito!");
@@ -35,7 +38,7 @@ public class GestionarDetalleVenta_Implement implements GestionDetalleVenta {
     @Override
     public void ActualizarDv(DetalleVenta Dv, int id) {
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE venta SET fecha=?, total=?, id_cliente=? WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE detalle_venta SET fecha=?, total=?, id_cliente=? WHERE id=?");
             ps.setInt(1, Dv.getCantidad());
             ps.setDouble(2, Dv.getSubtotal());
             ps.setInt(3, Dv.getId_venta().getId());
@@ -106,18 +109,26 @@ public class GestionarDetalleVenta_Implement implements GestionDetalleVenta {
             ResultSet rs = st.executeQuery("SELECT * FROM celular");
             while (rs.next()) {
                 Celular Ce = new Celular();
-                Ce.setId(rs.getInt("id_celular"));
+                Ce.setId(rs.getInt("id"));
                 Ce.setModelo(rs.getString("modelo"));
                 Ce.setSistema_operativo(rs.getString("sistema_operativo"));
-                Ce.Stock(rs.getInt("stock"));
+                String ga = rs.getString(4);
+                if (ga != null) {
+                    Ce.setGama(Gama.valueOf(ga.trim()));
+                }
+                Ce.setStock(rs.getInt("stock"));
+                Ce.setPrecio(rs.getDouble("precio"));
+                
+                Marca ma = new Marca();
+                ma.setNombre(rs.getString(7));
 
-
-                Ventas.add(Ve);
+                Ce.setId_marca(ma);
+                Celulares.add(Ce);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Ventas;
+        return Celulares;
     }
     
     @Override
@@ -162,7 +173,7 @@ public class GestionarDetalleVenta_Implement implements GestionDetalleVenta {
                 Dv.setSubtotal(rs.getDouble("subtotal"));
                 
                 Celular Ce = new Celular();
-                Ce.setId(rs.getInt("id_cliente"));
+                Ce.setId(rs.getInt("id"));
                 Ce.setModelo(rs.getString("modelo"));
                 
                 Venta Ve = new Venta();
@@ -175,5 +186,12 @@ public class GestionarDetalleVenta_Implement implements GestionDetalleVenta {
             System.out.println(e.getMessage());
         }
         return Dv;
+    }
+    
+    @Override
+    public double SubtotalDv(int cantidad, double precio) {
+        double subtotal = 0;
+        subtotal = cantidad * precio;
+        return subtotal;
     }
 }

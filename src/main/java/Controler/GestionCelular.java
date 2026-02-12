@@ -17,4 +17,6 @@ public interface GestionCelular {
     ArrayList<Marca> ListarMarca();
 
     Celular Buscar(int id);
+    
+    void ActualizarStock(int idCelular, int cantidadVendida);
 }

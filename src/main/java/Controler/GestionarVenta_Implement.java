@@ -11,22 +11,34 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GestionarVenta_Implement implements GestionVenta {
-    
+
     Conexion c = new Conexion();
 
     @Override
-    public void Registrar(Venta Ve) {
+    public int Registrar(Venta Ve) {
+
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO venta(fecha, total, id_cliente) VALUES (?,?,?)");
+
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO venta (fecha, total, id_cliente) VALUES (?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+
             ps.setDate(1, Ve.getFecha());
             ps.setDouble(2, Ve.getTotal());
             ps.setInt(3, Ve.getId_Cliente().getId());
-
+            
             ps.executeUpdate();
-            System.out.println("Registro Realizado con Exito!");
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return 0;
     }
 
     @Override
@@ -112,12 +124,12 @@ public class GestionarVenta_Implement implements GestionVenta {
         }
         return Clientes;
     }
-    
+
     @Override
     public Venta Buscar(int id) {
         Venta Ve = null;
         try (Connection con = c.Conexion()) {
-            PreparedStatement ps = con.prepareStatement("SELECT ve.id, ve.fecha, ve.total, cl.id AS id_cliente, cl.nombre AS cliente FROM venta ve INNER JOIN cliente cl ON ve.id_cliente = cl.id WHERE c.id=?");
+            PreparedStatement ps = con.prepareStatement("SELECT ve.id, ve.fecha, ve.total, cl.id AS id_cliente, cl.nombre AS nombre_cliente FROM venta ve INNER JOIN cliente cl ON ve.id_cliente = cl.id WHERE ve.id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -138,5 +150,12 @@ public class GestionarVenta_Implement implements GestionVenta {
             System.out.println(e.getMessage());
         }
         return Ve;
+    }
+
+    @Override
+    public double CalcularTotal(double subtotal) {
+        double total = 0;
+        total = subtotal * 0.19 + subtotal;
+        return total;
     }
 }
