@@ -5,12 +5,13 @@ import java.util.Scanner;
 public class Main {
 
     public void MenuPrincipal() {
-        int op = 0;
+        int op;
         Scanner sc = new Scanner(System.in);
         MenuCliente mCl = new MenuCliente();
         MenuCelular mCe = new MenuCelular();
         MenuGestionVentas mGv = new MenuGestionVentas();
         MenuReportesyAnalisis mRa = new MenuReportesyAnalisis();
+
         do {
             System.out.println("""
                                 ========================================
@@ -23,18 +24,30 @@ public class Main {
                                 = [0] Salir.                           =
                                 ========================================
                                 """);
-            System.out.print("  Seleccione una opcion: ");
-            op = sc.nextInt();
-            while (op < -1 || op > 4) {
-                System.out.println("  Error! Ingrese una opcion valida!");
-                op = sc.nextInt();
+            while (true) {
+                System.out.print("  Seleccione una opcion: ");
+                if (sc.hasNextInt()) {
+                    op = sc.nextInt();
+                    sc.nextLine();
+
+                    if (op >= 0 && op <= 4) {
+                        break;
+                    } else {
+                        System.out.println("  Error! Ingrese una opcion valida (0-4).");
+                    }
+                } else {
+                    System.out.println("  Error! Debe ingresar un numero.");
+                    sc.nextLine();
+                }
             }
             switch (op) {
                 case 1 -> mCe.MenuCelular();
                 case 2 -> mCl.MenuCliente();
                 case 3 -> mGv.MenuGestionVentas();
                 case 4 -> mRa.MenuReportesyAnalisis();
+                case 0 -> System.out.println("Saliendo del sistema...");
             }
+
         } while (op != 0);
     }
 }

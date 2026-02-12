@@ -3,12 +3,12 @@ package View;
 import java.util.Scanner;
 import Controler.GestionarCliente_Implement;
 import Controler.GestionCliente;
+import Controler.Validaciones;
 import Model.Cliente;
 import java.util.ArrayList;
 
 public class MenuCliente {
-    
-    
+
     public void MenuCliente() {
         int op = 0;
         Scanner sc = new Scanner(System.in);
@@ -32,42 +32,60 @@ public class MenuCliente {
                 op = sc.nextInt();
             }
             switch (op) {
-                case 1 -> Registrar();
-                case 2 -> Actualizar();
-                case 3 -> Eliminar();
-                case 4 -> Listar();
-                case 5 -> Buscar();
+                case 1 ->
+                    Registrar();
+                case 2 ->
+                    Actualizar();
+                case 3 ->
+                    Eliminar();
+                case 4 ->
+                    Listar();
+                case 5 ->
+                    Buscar();
             }
         } while (op != 6);
     }
-    
+
     GestionCliente Gc = new GestionarCliente_Implement();
-    
+
     private void Registrar() {
         Cliente Cl = new Cliente();
-        
+
         System.out.println("Nombre: ");
         Cl.setNombre(new Scanner(System.in).nextLine());
-        
+
         System.out.println("ID: ");
         Cl.setIdentificacion(new Scanner(System.in).nextInt());
-        
+
         System.out.println("Correo Electronico: ");
-        Cl.setCorreo(new Scanner(System.in).nextLine());
-        
+        Scanner sc = new Scanner(System.in);
+        String correo;
+
+        do {
+            System.out.print("Ingrese el correo: ");
+            correo = sc.nextLine();
+
+            if (!Validaciones.correoValidador(correo)) {
+                System.out.println("Correo inválido. Intente nuevamente.");
+            }
+
+        } while (!Validaciones.correoValidador(correo));
+
+        Cl.setCorreo(correo);
+
         System.out.println("Telefono/Celular: ");
         Cl.setTelefono(new Scanner(System.in).nextLine());
-        
+
         Gc.Registrar(Cl);
     }
-    
+
     private void Actualizar() {
         System.out.println("========================================");
         System.out.print("  ID Cliente a Actualizar: ");
         int Id = new Scanner(System.in).nextInt();
-        
+
         Cliente Cl = Gc.Buscar(Id);
-        
+
         if (Cl != null) {
             System.out.println("========================================");
             System.out.println("   Datos de " + Cl.getNombre() + ": ");
@@ -82,12 +100,12 @@ public class MenuCliente {
                                 ========================================
                                """);
             int op = new Scanner(System.in).nextInt();
-            
+
             while (op < 1 || op > 4) {
                 System.out.println("Error! Ingrese una opcion valida!");
                 op = new Scanner(System.in).nextInt();
             }
-            switch(op){
+            switch (op) {
                 case 1:
                     System.out.println("Ingrese el nuevo Nombre: ");
                     Cl.setNombre(new Scanner(System.in).nextLine());
@@ -107,11 +125,11 @@ public class MenuCliente {
                     System.out.println("Actualizacion Realizada!");
             }
             Gc.Actualizar(Cl, Id);
-        } else{
+        } else {
             System.out.println("Cliente no Encontrado!");
         }
     }
-    
+
     private void Eliminar() {
         System.out.println("""
                                ========================================
@@ -120,9 +138,9 @@ public class MenuCliente {
                                """);
         System.out.print("ID Cliente a Eliminar: ");
         int Id = new Scanner(System.in).nextInt();
-        
+
         Cliente Cl = Gc.Buscar(Id);
-        
+
         if (Cl != null) {
             System.out.println("========================================");
             System.out.println("   Datos de " + Cl.getNombre() + ": ");
@@ -130,11 +148,11 @@ public class MenuCliente {
             System.out.println("========================================");
 
             Gc.Eliminar(Id);
-        } else{
+        } else {
             System.out.println("Cliente no Encontrado!");
         }
     }
-    
+
     private void Listar() {
         ArrayList<Cliente> clientes = Gc.Listar();
         System.out.println("""
@@ -148,7 +166,6 @@ public class MenuCliente {
         }
     }
 
-    
     private void Buscar() {
         System.out.println("""
                            ========================================
@@ -163,8 +180,8 @@ public class MenuCliente {
             System.out.println("   Datos de " + Cl.getNombre() + ": ");
             System.out.println(Cl);
             System.out.println("========================================");
-        } else{
+        } else {
             System.out.println("Cliente no Encontrado!");
-        } 
+        }
     }
 }
