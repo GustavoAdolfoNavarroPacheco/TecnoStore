@@ -1,5 +1,7 @@
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\com\mycompany\tecnostore\TecnoStore.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\Conexion.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionAnalisis.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarAnalisis_Implement.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarCelular_Implement.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarCliente_Implement.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionarDetalleVenta_Implement.java
@@ -7,8 +9,10 @@ C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Con
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionCelular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionCliente.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionDetalleVenta.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionReporte.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\GestionVenta.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\Validaciones.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Controler\VentaReportes.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Model\Celular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Model\Cliente.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Model\DetalleVenta.java
@@ -18,4 +22,6 @@ C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\Mod
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\Main.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuCelular.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuCliente.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuGenerarReporte.java
 C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuGestionVentas.java
+C:\Users\gusta\OneDrive\Documentos\NetBeansProjects\TecnoStore\src\main\java\View\MenuReportesyAnalisis.java

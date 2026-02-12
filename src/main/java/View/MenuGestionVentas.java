@@ -45,7 +45,7 @@ public class MenuGestionVentas {
                 case 1 ->
                     Registrar();
                 case 2 ->
-                    Actualizar();
+                    MenuActualizar();
                 case 3 ->
                     Eliminar();
                 case 4 ->
@@ -140,6 +140,39 @@ public class MenuGestionVentas {
         Gdv.RegistrarDv(Dv);
     }
 
+    public void MenuActualizar() {
+        int op = 0;
+        do {
+            System.out.println("""
+                               ========================================
+                               =              ACTUALIZAR              =
+                               ========================================
+                               = Ingrese segun quiera Actualizar:     =
+                               = [1] Venta.                           =
+                               = [2] Detalle Venta.                   =
+                               = [3] Regresar.                        =
+                               ========================================
+                               """);
+            System.out.print("  Selecciona una opcion: ");
+            op = sc.nextInt();
+            while (op < -1 || op > 3) {
+                System.out.println("Error! Ingrese una opcion valida!");
+                op = sc.nextInt();
+            }
+            switch (op) {
+                case 1:
+                    Actualizar();
+                    break;
+                case 2:
+                    ActualizarDv();
+                    break;
+                case 3:
+                    System.out.println("Regresando al menu principal...");
+                    break;
+            }
+        } while (op != 3);
+    }
+
     private void Actualizar() {
         System.out.println("========================================");
         System.out.print("  ID Venta a Actualizar: ");
@@ -194,6 +227,92 @@ public class MenuGestionVentas {
                     break;
             }
             Gv.Actualizar(Ve, Id);
+        } else {
+            System.out.println("Venta no Encontrada!");
+        }
+    }
+
+    private void ActualizarDv() {
+        System.out.println("========================================");
+        System.out.print("  ID Venta a Actualizar: ");
+        int Id = new Scanner(System.in).nextInt();
+
+        DetalleVenta Dv = Gdv.BuscarDv(Id);
+        Venta Ve = Gv.Buscar(Dv.getId_venta().getId());
+
+        if (Dv != null) {
+            System.out.println("========================================");
+            System.out.println("   Datos de " + Dv.getId() + ": ");
+            System.out.println(Dv);
+            System.out.println("""
+                                ========================================
+                                = Seleccione opcion a modificar:       =
+                                = [1] Cantidad.                        =
+                                = [2] Celular.                         =
+                                = [3] Regresar.                        =
+                                ========================================
+                               """);
+            int op = new Scanner(System.in).nextInt();
+
+            while (op < 1 || op > 3) {
+                System.out.println("Error! Ingrese una opcion valida!");
+                op = new Scanner(System.in).nextInt();
+            }
+            switch (op) {
+                case 1:
+                    System.out.println("Ingrese la nueva cantidad: ");
+                    int cantidad = sc.nextInt();
+                    if (Dv.getId_celular() == null) {
+                        System.out.println("Este detalle no tiene celular asignado.");
+                        return;
+                    }
+                    int idCelular = Dv.getId_celular().getId();
+                    ArrayList<Celular> celulares = Gdv.ListarCelular();
+                    Celular celularSeleccionado = celulares.stream()
+                            .filter(m -> m.getId() == idCelular)
+                            .findFirst()
+                            .orElse(null);
+                    Celular Ce = celularSeleccionado;
+                    if (Ce.getStock() < cantidad) {
+                        System.out.println("No hay stock suficiente");
+                        return;
+                    }
+
+                    double precio = Ce.getPrecio();
+                    double subtotal = Gdv.SubtotalDv(cantidad, precio);
+                    double total = Gv.CalcularTotal(subtotal);
+                    Ve.setTotal(total);
+                    Gc.ActualizarStock(Ce.getId(), cantidad);
+                    Dv.setCantidad(cantidad);
+                    Dv.setSubtotal(subtotal);
+
+                    System.out.println("Actualizacion Realizada!");
+                    break;
+                case 2:
+                    ArrayList<Celular> Celulares = Gdv.ListarCelular();
+
+                    Celulares.forEach(System.out::println);
+
+                    System.out.print("Ingrese una opcion: ");
+                    int idCelularAct = sc.nextInt();
+
+                    Celular celularSeleccionadoAct = Celulares.stream()
+                            .filter(m -> m.getId() == idCelularAct)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (celularSeleccionadoAct == null) {
+                        System.out.println("La marca seleccionada no existe!");
+                        return;
+                    }
+
+                    Dv.setId_celular(celularSeleccionadoAct);
+
+                    System.out.println("Actualizacion Realizada!");
+                    break;
+            }
+            Gv.Actualizar(Ve, Id);
+            Gdv.ActualizarDv(Dv, Id);
         } else {
             System.out.println("Venta no Encontrada!");
         }

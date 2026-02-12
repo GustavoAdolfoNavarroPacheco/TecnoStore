@@ -15,6 +15,8 @@ public interface GestionDetalleVenta {
 
     ArrayList<DetalleVenta> ListarDv();
     
+    ArrayList<DetalleVenta> ListarRdv();
+    
     ArrayList<Venta> ListarVenta();
     
     ArrayList<Celular> ListarCelular();
